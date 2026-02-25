@@ -1,6 +1,6 @@
 # incremental-commit-workflow
 
-A discipline-enforcing Claude Code Skill that ensures method-level commit granularity with clear "what" and "why" in every commit message.
+A discipline-enforcing workflow for AI-assisted development that ensures method-level commit granularity with clear "what" and "why" in every commit message. Works with **Claude Code**, **Codex**, **Cursor**, **Gemini**, **GitHub Copilot**, **OpenCode**, and other AI coding agents.
 
 ## Problem
 
@@ -8,7 +8,7 @@ When AI agents implement features involving multiple methods, they tend to batch
 
 ## Solution
 
-This skill enforces:
+This workflow enforces:
 - **One method, one commit** - each commit modifies exactly one method/function
 - **Plan before you code** - produce a commit plan table and get approval before implementation
 - **Conventional Commits + why** - every commit message includes a description and the reason for the change
@@ -16,25 +16,48 @@ This skill enforces:
 
 ## Installation
 
-Copy the `incremental-commit-workflow` directory into your Claude Code skills folder:
+### Claude Code
+
+Copy the directory into your Claude Code skills folder:
 
 ```bash
-# Clone the repository
 git clone https://github.com/Chao-Shiun/incremental-commit-workflow.git
-
-# Copy to Claude Code skills directory
 cp -r incremental-commit-workflow ~/.claude/skills/
 ```
 
 Or manually create `~/.claude/skills/incremental-commit-workflow/SKILL.md` with the skill content.
 
+### Cursor
+
+Add the workflow rules to your Cursor rules file (`.cursor/rules/incremental-commit.mdc`), or paste the content of `SKILL.md` into **Cursor Settings > Rules for AI**.
+
+### GitHub Copilot
+
+Add the workflow instructions to your repository's `.github/copilot-instructions.md`, or include them in your prompt when using Copilot Chat.
+
+### Codex (OpenAI)
+
+Include the workflow instructions in your `AGENTS.md` or system prompt configuration file used by Codex.
+
+### Gemini (Google)
+
+Paste the workflow rules into your Gemini prompt prefix, or include them in your project's AI instruction file (e.g., `.gemini/style-guide.md`).
+
+### OpenCode
+
+Add the workflow instructions to your OpenCode configuration via `AGENTS.md` or the system prompt in your OpenCode settings.
+
+### Other AI Tools
+
+The core workflow is defined in `SKILL.md`. Copy its content into whatever system prompt, rules file, or instruction mechanism your AI tool supports.
+
 ## Usage
 
-This skill activates automatically when Claude Code detects a task requiring modifications to multiple methods or functions.
+This workflow activates when a task requires modifications to multiple methods or functions.
 
 ### Workflow
 
-1. **PLAN** - Claude analyzes the task, lists methods to modify, and presents a commit plan table
+1. **PLAN** - AI analyzes the task, lists methods to modify, and presents a commit plan table
 2. **IMPLEMENT** - One method at a time, commit immediately after each change
 3. **COMPLETE** - Show commit history summary, wait for push instructions
 
@@ -65,9 +88,17 @@ Reduce database load during peak hours. Current implementation queries
 DB on every request, causing latency spikes with concurrent users.
 ```
 
-## Requirements
+## Compatibility
 
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI
+| AI Tool | Integration Method |
+|---------|-------------------|
+| Claude Code | `~/.claude/skills/` directory (auto-discovery) |
+| Cursor | `.cursor/rules/*.mdc` or Settings > Rules for AI |
+| GitHub Copilot | `.github/copilot-instructions.md` or Copilot Chat prompt |
+| Codex (OpenAI) | `AGENTS.md` or system prompt config |
+| Gemini (Google) | Prompt prefix or project AI instruction file |
+| OpenCode | `AGENTS.md` or system prompt settings |
+| Other | Copy `SKILL.md` content into system prompt or rules file |
 
 ## License
 
