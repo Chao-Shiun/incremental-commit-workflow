@@ -102,4 +102,4 @@ DB on every request, causing latency spikes with concurrent users.
 
 ## 授權
 
-MIT
+本專案採用 MIT 授權。詳細內容請參考 `LICENSE`。

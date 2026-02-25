@@ -102,4 +102,4 @@ DB on every request, causing latency spikes with concurrent users.
 
 ## License
 
-MIT
+This project is licensed under the MIT License. See `LICENSE` for details.

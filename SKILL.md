@@ -60,8 +60,7 @@ digraph incremental_commit {
     approved [label="Plan approved?", shape=diamond];
     revise [label="Revise plan per feedback", shape=box];
 
-    pick_next [label="Pick next method\nfrom plan", shape=box];
-    implement [label="Implement single\nmethod change", shape=box];
+    implement [label="Implement next\nsingle method change", shape=box];
     stage [label="Stage related files", shape=box];
     write_msg [label="Write commit message\n(Conventional Commits + why)", shape=box];
     commit_local [label="git commit (local only)", shape=plaintext];
@@ -79,18 +78,17 @@ digraph incremental_commit {
     list_methods -> plan_order;
     plan_order -> show_plan;
     show_plan -> approved;
-    approved -> pick_next [label="yes"];
+    approved -> implement [label="yes"];
     approved -> revise [label="no"];
     revise -> show_plan;
 
-    pick_next -> implement;
     implement -> stage;
     stage -> write_msg;
     write_msg -> commit_local;
     commit_local -> verify;
     verify -> more [label="yes"];
-    verify -> pick_next [label="failed, fix and retry"];
-    more -> pick_next [label="yes"];
+    verify -> implement [label="failed, fix and retry"];
+    more -> implement [label="yes"];
     more -> show_log [label="no"];
 
     show_log -> wait_push;
