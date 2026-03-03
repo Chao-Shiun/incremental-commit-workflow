@@ -1,6 +1,6 @@
 ---
 name: incremental-commit-workflow
-description: Use when implementing features, fixes, or refactors that involve modifying multiple methods or functions - enforces granular commit discipline with one method per commit and mandatory commit planning before implementation begins
+description: Use when implementing any code change — features, bug fixes, refactors, adding tests, or even single-line modifications like typo fixes, variable renames, or adding comments. This skill enforces disciplined commit practices: plan commits before coding, one logical change per commit, and clear commit messages explaining the "why". Trigger this skill whenever the user asks you to write, modify, or add code in any file — but NOT for reading code, exploring architecture, reviewing PRs, asking about git strategy, or creating documentation files.
 ---
 
 # Incremental Commit Workflow
