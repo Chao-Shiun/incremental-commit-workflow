@@ -136,6 +136,8 @@ The `<scope>` in commit messages must be the **ticket/issue number** (e.g., `PT-
 
 **Types:** feat, fix, refactor, test, docs, chore, perf, style
 
+Commit messages must only contain the description of the change itself. Do not append author information, tool signatures, `Co-Authored-By` trailers, or any metadata about how the commit was produced. The git history should read as a clean record of *what changed and why* — not *who or what tool wrote it*.
+
 **Example:**
 ```
 feat(PT-1234): add Redis cache for GetGameList method
@@ -157,6 +159,13 @@ feat(PT-1234): add Redis cache and update DTO mapping and fix sorting
 
 # Vague description
 fix(PT-1234): fix bug
+
+# Includes author/tool metadata — commit messages are for describing changes only
+feat(PT-1234): add Redis cache
+
+Reduce database load during peak hours.
+
+Co-Authored-By: Some Tool <noreply@example.com>
 ```
 
 ## Red Flags - STOP and Reassess
@@ -168,6 +177,7 @@ fix(PT-1234): fix bug
 - Commit message has no "why" paragraph
 - Commit message scope uses a module/class name instead of ticket number
 - Ticket number not confirmed before starting commit plan
+- Commit message contains author info, `Co-Authored-By`, or tool metadata
 - Thinking "I'll commit everything at the end"
 - Thinking "these changes are too small to separate"
 - Writing code for the next method before committing the current one
