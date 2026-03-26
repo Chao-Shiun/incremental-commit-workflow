@@ -106,9 +106,9 @@ Before ANY implementation, produce this plan and get approval:
 
 | # | Type | Scope | Method/Function | Description | Why |
 |---|------|-------|----------------|-------------|-----|
-| 1 | feat | ServiceName | GetItems() | Add pagination support | Current impl loads all items, causing OOM on large datasets |
-| 2 | feat | ServiceName | MapToDto() | Add page metadata to DTO | Frontend needs total count and page info for pagination UI |
-| 3 | test | ServiceName | GetItems_Paged | Add pagination unit tests | Verify boundary conditions and empty page handling |
+| 1 | feat | PT-1234 | GetItems() | Add pagination support | Current impl loads all items, causing OOM on large datasets |
+| 2 | feat | PT-1234 | MapToDto() | Add page metadata to DTO | Frontend needs total count and page info for pagination UI |
+| 3 | test | PT-1234 | GetItems_Paged | Add pagination unit tests | Verify boundary conditions and empty page handling |
 
 Dependency order: #1 before #2 (MapToDto depends on new pagination fields)
 ```
@@ -118,20 +118,29 @@ Dependency order: #1 before #2 (MapToDto depends on new pagination fields)
 - Each commit = exactly one method/function change
 - Order respects dependencies
 - "Why" column is mandatory - it explains the reason, not the change
+- "Scope" column uses the ticket number (see Scope Convention below)
+
+## Scope Convention
+
+The `<scope>` in commit messages must be the **ticket/issue number** (e.g., `PT-1234`, `JIRA-567`, `#42`), not the module or class name. This provides direct traceability from git log to your issue tracker, which is far more valuable than knowing which file was changed (reviewers can already see that in the diff).
+
+**Before writing a commit plan, confirm the ticket number.** Check the branch name (e.g., `feature/PT-1234-add-pagination` → scope is `PT-1234`), ask the human partner, or read it from the task context. If the ticket number is unknown, ask before proceeding — never guess or substitute a module name.
 
 ## Commit Message Format
 
 ```
-<type>(<scope>): <description>
+<type>(<ticket-number>): <description>
 
 <why - explain the reason for this change>
 ```
 
 **Types:** feat, fix, refactor, test, docs, chore, perf, style
 
+Commit messages must only contain the description of the change itself. Do not append author information, tool signatures, `Co-Authored-By` trailers, or any metadata about how the commit was produced. The git history should read as a clean record of *what changed and why* — not *who or what tool wrote it*.
+
 **Example:**
 ```
-feat(GameListService): add Redis cache for GetGameList method
+feat(PT-1234): add Redis cache for GetGameList method
 
 Reduce database load during peak hours. Current implementation queries
 DB on every request, causing latency spikes with concurrent users.
@@ -139,14 +148,24 @@ DB on every request, causing latency spikes with concurrent users.
 
 **Bad examples:**
 ```
-# Missing why
+# Scope uses module name instead of ticket number
 feat(GameListService): add Redis cache
 
+# Missing why
+feat(PT-1234): add Redis cache
+
 # Multiple methods in one commit
-feat(GameListService): add Redis cache and update DTO mapping and fix sorting
+feat(PT-1234): add Redis cache and update DTO mapping and fix sorting
 
 # Vague description
-fix(GameListService): fix bug
+fix(PT-1234): fix bug
+
+# Includes author/tool metadata — commit messages are for describing changes only
+feat(PT-1234): add Redis cache
+
+Reduce database load during peak hours.
+
+Co-Authored-By: Some Tool <noreply@example.com>
 ```
 
 ## Red Flags - STOP and Reassess
@@ -156,6 +175,9 @@ fix(GameListService): fix bug
 - No commit plan was shown before implementation started
 - About to `git push` without human approval
 - Commit message has no "why" paragraph
+- Commit message scope uses a module/class name instead of ticket number
+- Ticket number not confirmed before starting commit plan
+- Commit message contains author info, `Co-Authored-By`, or tool metadata
 - Thinking "I'll commit everything at the end"
 - Thinking "these changes are too small to separate"
 - Writing code for the next method before committing the current one
@@ -179,10 +201,11 @@ fix(GameListService): fix bug
 
 | Phase | Action | Output |
 |-------|--------|--------|
+| IDENTIFY | Confirm ticket number from branch name or human | Ticket number for scope (e.g., PT-1234) |
 | PLAN | Analyze + list methods + order by dependency | Commit plan table shown to human |
 | IMPLEMENT | Modify ONE method | Code change in working directory |
 | STAGE | `git add <specific files>` | Staged changes for ONE method only |
-| COMMIT | `git commit -m "<type>(<scope>): ..."` | Local commit with why |
+| COMMIT | `git commit -m "<type>(<ticket>): ..."` | Local commit with why |
 | REPEAT | Back to IMPLEMENT for next method | Next commit |
 | COMPLETE | Show `git log --oneline` summary | Human decides whether to push |
 
@@ -190,9 +213,10 @@ fix(GameListService): fix bug
 
 Before each `git commit`:
 1. `git diff --staged` shows changes to exactly ONE method/function
-2. Commit message follows `<type>(<scope>): <description>` format
-3. Commit message body contains a "why" explanation
-4. No unstaged changes that belong to this logical unit
+2. Commit message follows `<type>(<ticket-number>): <description>` format
+3. Scope is the ticket number, not a module or class name
+4. Commit message body contains a "why" explanation
+5. No unstaged changes that belong to this logical unit
 
 After all commits:
 1. `git log --oneline` shows the planned sequence
