@@ -1,6 +1,6 @@
 ---
 name: incremental-commit-workflow
-description: Use when implementing any code change — features, bug fixes, refactors, adding tests, or even single-line modifications like typo fixes, variable renames, or adding comments. This skill enforces disciplined commit practices: plan commits before coding, commit by logical unit (new creations get independent commits, existing logic changes commit per API/Job), build verification after every commit, and clear commit messages linking changes to specific requirements. Trigger this skill whenever the user asks you to write, modify, or add code in any file — but NOT for reading code, exploring architecture, reviewing PRs, asking about git strategy, or creating documentation files.
+description: "Use when implementing any code change — features, bug fixes, refactors, adding tests, or even single-line modifications like typo fixes, variable renames, or adding comments. This skill enforces disciplined commit practices: plan commits before coding, commit by logical unit (new creations get independent commits, existing logic changes commit per API/Job), build verification after every commit, and clear commit messages linking changes to specific requirements. Trigger this skill whenever the user asks you to write, modify, or add code in any file — but NOT for reading code, exploring architecture, reviewing PRs, asking about git strategy, or creating documentation files."
 ---
 
 # Incremental Commit Workflow
